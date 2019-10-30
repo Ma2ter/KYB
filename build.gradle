@@ -1,0 +1,35 @@
+plugins {
+    id 'java'
+    id 'org.jetbrains.kotlin.jvm' version '1.3.50'
+}
+
+group 'nt.kyb'
+version '1.0-SNAPSHOT'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8"
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+dependencies {
+    implementation files("${project.projectDir}/src/main/resources/jprotractor-1.1-SNAPSHOT.jar")
+    compile group: 'org.seleniumhq.selenium', name: 'selenium-java', version: '3.141.59'
+    compile group: 'com.google.guava', name: 'guava', version: '28.0-jre'
+    compile group: 'ru.yandex.qatools.htmlelements', name: 'htmlelements-java', version: '1.20.0'
+    implementation "com.fasterxml.jackson.core:jackson-databind:2.9.9.1"
+    implementation "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:2.9.9"
+
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
+compileTestKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}

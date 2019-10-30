@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://test-api.sumsub.com/idensic/static/sumsub-kyc.js"></script>
+    <meta charset="UTF-8">
+    <title>Test SDK SS</title>
+</head>
+<body>
+<div id="idensic"></div>
+</body>
+</html>
+<script>
+  // ...
+  var id = idensic.init(
+    // selector of the WebSDK container (see above)
+    '#idensic',
+    // configuration object (see settings in the demo)
+    {
+           "clientId": "n-t.io",
+           "includedCountries": null,
+           "excludedCountries": null,
+           "externalUserId": "n-t.final-1",
+           "accessToken": "_act-2179f342-5b09-475f-a6ce-7c8aa07b28ac",
+           "navConf": {
+             "skipWelcomeScreen": true,
+             "skipAgreementsScreen": true,
+             "skipReviewScreen": false,
+             "registration": "disabled"
+           },
+           "actions": {
+             "faceAuth": false
+           },
+           "uiConf": {
+             "lang": "en"
+           },
+           "documentsByCountries": {}
+        }
+  )
+
+
+</script>
