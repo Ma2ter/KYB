@@ -3,14 +3,14 @@
 * Для нового externalUserId создание applicantRequest - `POST /resources/accounts/-/applicantRequests` с `Authorization: <authToken>` и телом 
 ```{
 	"applicant": {
-		"email": "",
+	"email": "",
         "externalUserId": "<externalUserId>",
-		"requiredIdDocs": {
-               "country": null,
-               "includedCountries": null,
-               "excludedCountries": null,
-               "docSets": [
-                 {
+	"requiredIdDocs": {
+		"country": null,
+		"includedCountries": null,
+		"excludedCountries": null,
+		"docSets": [
+		{
                    "idDocSetType": "COMPANY",
                    "types": [
                      "COMPANY_DOC"
@@ -52,14 +52,18 @@
                ]
              }
 	}
-}```
+}
+```
 
 3. Генерируем временный accessToken: 
 ```curl -X POST \
   'https://test-api.sumsub.com/resources/accessTokens?userId=n-t.io&externalUserId=<externalUserId>' \
   -H 'Accept: application/json' \
-  -H 'Authorization: <authToken>'```
+  -H 'Authorization: <authToken>'
+  ```
 
 4. Передаем externalUserId и accessToken в скрипт
-```"externalUserId": "<externalUserId>",
-"accessToken": "<accessToken>"```
+```
+"externalUserId": "<externalUserId>",
+"accessToken": "<accessToken>"
+```
