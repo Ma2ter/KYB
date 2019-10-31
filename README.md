@@ -1,7 +1,7 @@
-##KYB page generation flow
-1. Авторизация в S&S через `/resources/auth/login`. Header `Authorization: <Base 64 login:password>` - получаем authToken
-2. Для нового externalUserId создание applicantRequest - `POST /resources/accounts/-/applicantRequests` с `Authorization: <authToken>` и телом 
-{
+# KYB page generation flow
+* Авторизация в S&S через `/resources/auth/login`. Header `Authorization: <Base 64 login:password>` - получаем authToken
+* Для нового externalUserId создание applicantRequest - `POST /resources/accounts/-/applicantRequests` с `Authorization: <authToken>` и телом 
+```{
 	"applicant": {
 		"email": "",
         "externalUserId": "<externalUserId>",
@@ -52,14 +52,14 @@
                ]
              }
 	}
-}
+}```
 
 3. Генерируем временный accessToken: 
-curl -X POST \
+```curl -X POST \
   'https://test-api.sumsub.com/resources/accessTokens?userId=n-t.io&externalUserId=<externalUserId>' \
   -H 'Accept: application/json' \
-  -H 'Authorization: <authToken>'
+  -H 'Authorization: <authToken>'```
 
 4. Передаем externalUserId и accessToken в скрипт
-"externalUserId": "<externalUserId>",
-"accessToken": "<accessToken>"
+```"externalUserId": "<externalUserId>",
+"accessToken": "<accessToken>"```
