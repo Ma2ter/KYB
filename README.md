@@ -3,54 +3,54 @@
 * Для нового externalUserId создание applicantRequest - `POST /resources/accounts/-/applicantRequests` с `Authorization: <authToken>` и телом 
 ```{
 	"applicant": {
-	"email": "",
-        "externalUserId": "<externalUserId>",
-	"requiredIdDocs": {
-		"country": null,
-		"includedCountries": null,
-		"excludedCountries": null,
-		"docSets": [
-		{
-                   "idDocSetType": "COMPANY",
-                   "types": [
-                     "COMPANY_DOC"
-                   ],
-                   "subTypes": null,
-                   "fields": [
-                     {
-                       "name": "companyName",
-                       "required": false
-                     },
-                     {
-                       "name": "registrationNumber",
-                       "required": false
-                     },
-                     {
-                       "name": "type",
-                       "required": false
-                     },
-                     {
-                       "name": "incorporatedOn",
-                       "required": false
-                     },
-                     {
-                       "name": "country",
-                       "required": false
-                     },
-                     {
-                       "name": "legalAddress",
-                       "required": false
-                     },
-                     {
-                       "name": "controlScheme",
-                       "required": false
-                     }
-                   ],
-                   "imageIds": null,
-                   "mode": null
-                 }
-               ]
-             }
+		"email": "",
+		"externalUserId": "<externalUserId>",
+		"requiredIdDocs": {
+			"country": null,
+			"includedCountries": null,
+			"excludedCountries": null,
+			"docSets": [
+			{
+			   "idDocSetType": "COMPANY",
+			   "types": [
+			     "COMPANY_DOC"
+			   ],
+			   "subTypes": null,
+			   "fields": [
+			     {
+			       "name": "companyName",
+			       "required": false
+			     },
+			     {
+			       "name": "registrationNumber",
+			       "required": false
+			     },
+			     {
+			       "name": "type",
+			       "required": false
+			     },
+			     {
+			       "name": "incorporatedOn",
+			       "required": false
+			     },
+			     {
+			       "name": "country",
+			       "required": false
+			     },
+			     {
+			       "name": "legalAddress",
+			       "required": false
+			     },
+			     {
+			       "name": "controlScheme",
+			       "required": false
+			     }
+			   ],
+			   "imageIds": null,
+			   "mode": null
+			 }
+		       ]
+		}
 	}
 }
 ```
