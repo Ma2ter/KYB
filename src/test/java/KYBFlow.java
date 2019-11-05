@@ -1,6 +1,7 @@
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -10,13 +11,14 @@ import java.util.List;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
+import static org.openqa.selenium.By.*;
 import static org.openqa.selenium.support.ui.ExpectedConditions.presenceOfElementLocated;
 
 public class KYBFlow {
 
     private WebDriver driver;
     private WebDriverWait wait;
-    private By nextLocator = By.xpath("//*[@class='row center']//*[@class='submit']");
+    private By nextLocator = xpath("//*[@class='row center']//*[@class='submit']");
 
     public KYBFlow(String url) {
         initDriver(url);
@@ -56,7 +58,9 @@ public class KYBFlow {
     }
 
     private void initDriver(String url) {
-        driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+        options.addArguments("--headless");
+        driver = new ChromeDriver(options);
         driver.manage().timeouts()
                 .implicitlyWait(3, TimeUnit.SECONDS)
                 .pageLoadTimeout(15, TimeUnit.SECONDS);
@@ -67,27 +71,27 @@ public class KYBFlow {
     }
 
     public void addCompanyInfo(CompanyInfo info, List<File> documents) {
-        driver.findElement(By.name("companyName")).sendKeys(info.getCompanyName());
-        driver.findElement(By.name("registrationNumber")).sendKeys(info.getRegistrationNumber());
-        driver.findElement(By.cssSelector(".country")).sendKeys(info.getCountry());
-        driver.findElement(By.name("type")).sendKeys(info.getTypeOfEntity());
-        driver.findElement(By.name("incorporatedOn")).sendKeys(info.getIncorporatedOn());
-        driver.findElement(By.name("controlScheme")).sendKeys(info.getControlScheme());
+        driver.findElement(name("companyName")).sendKeys(info.getCompanyName());
+        driver.findElement(name("registrationNumber")).sendKeys(info.getRegistrationNumber());
+        driver.findElement(cssSelector(".country")).sendKeys(info.getCountry());
+        driver.findElement(name("type")).sendKeys(info.getTypeOfEntity());
+        driver.findElement(name("incorporatedOn")).sendKeys(info.getIncorporatedOn());
+        driver.findElement(name("controlScheme")).sendKeys(info.getControlScheme());
         if (info.getSkipUbo()) {
-            driver.findElement(By.name("ownerType ")).click();
+            driver.findElement(name("ownerType ")).click();
         }
         documents.forEach(file -> {
-            By uploadDocumentLocator = By.cssSelector(".empty > .drag-drop > input");
+            By uploadDocumentLocator = cssSelector(".empty > .drag-drop > input");
             wait.until(presenceOfElementLocated(uploadDocumentLocator));
             driver.findElement(uploadDocumentLocator).sendKeys(file.getAbsolutePath());
             //.empty > .drag-drop > .error
-            wait.until(ExpectedConditions.invisibilityOfElementLocated(By.cssSelector(".circle")));
-            if (!driver.findElements(By.cssSelector(".empty > .drag-drop > .error")).isEmpty()) {
+            wait.until(ExpectedConditions.invisibilityOfElementLocated(cssSelector(".circle")));
+            if (!driver.findElements(cssSelector(".empty > .drag-drop > .error")).isEmpty()) {
                 throw new RuntimeException("Error while uploading file " + file.getAbsolutePath() + " - Invalid file format or duplicate");
             }
 
         });
-        driver.findElement(By.cssSelector(".submit:last-of-type")).click();
+        driver.findElement(cssSelector(".submit:last-of-type")).click();
     }
 
     public int addUboInfo(int startIndex, List<UboInfo> infoList) {
@@ -96,7 +100,7 @@ public class KYBFlow {
             int index = idx + startIndex;
             //if not first UBO then click on 'Add a participant'
             if (idx > 0) {
-                driver.findElement(By.cssSelector(".payment-method-add")).click();
+                driver.findElement(cssSelector(".payment-method-add")).click();
             }
             addPosition(index, info);
         });
@@ -110,9 +114,9 @@ public class KYBFlow {
             int index = idx + startIndex;
             //if not first UBO then click on 'Add a participant'
             if (idx > 0) {
-                driver.findElement(By.cssSelector(".payment-method-add")).click();
+                driver.findElement(cssSelector(".payment-method-add")).click();
             }
-            driver.findElement(By.xpath("(//*[@value='individual']/ancestor::label)[last()]")).click();
+            driver.findElement(xpath("(//*[@value='individual']/ancestor::label)[last()]")).click();
             addPosition(index, info);
         });
 
@@ -125,15 +129,15 @@ public class KYBFlow {
             CompanyInfo info = infoList.get(idx);
             int index = idx + startIndex;
             //if not first UBO then click on 'Add a participant'
-            if (!driver.findElements(By.cssSelector(".payment-method-add")).isEmpty()) {
-                driver.findElement(By.cssSelector(".payment-method-add")).click();
+            if (!driver.findElements(cssSelector(".payment-method-add")).isEmpty()) {
+                driver.findElement(cssSelector(".payment-method-add")).click();
             }
-            driver.findElement(By.xpath("(//*[@value='company']/ancestor::label)[last()]")).click();
-            driver.findElement(By.name(index + "companyName")).sendKeys(info.getCompanyName());
-            driver.findElement(By.name(index + "registrationNumber")).sendKeys(info.getRegistrationNumber());
-            driver.findElement(By.xpath("//*[@class='country'][last()]")).sendKeys(info.getCountry());
+            driver.findElement(xpath("(//*[@value='company']/ancestor::label)[last()]")).click();
+            driver.findElement(name(index + "companyName")).sendKeys(info.getCompanyName());
+            driver.findElement(name(index + "registrationNumber")).sendKeys(info.getRegistrationNumber());
+            driver.findElement(xpath("//*[@class='country'][last()]")).sendKeys(info.getCountry());
 
-            driver.findElement(By.xpath("(//*[@class='payment-method']//*[@class='submit'])[last()]")).click();
+            driver.findElement(xpath("(//*[@class='payment-method']//*[@class='submit'])[last()]")).click();
         });
 
         return startIndex + infoList.size();
@@ -141,24 +145,24 @@ public class KYBFlow {
 
     public void addPosition(int index, UboInfo info) {
         if (info.getShareholder()) {
-            driver.findElement(By.xpath("(//*[@value='shareholder']/ancestor::label)[last()]")).click();
+            driver.findElement(xpath("(//*[@value='shareholder']/ancestor::label)[last()]")).click();
         }
         if (info.getDirector()) {
-            driver.findElement(By.cssSelector("(//*[@value='director']/ancestor::label)[last()]")).click();
+            driver.findElement(cssSelector("(//*[@value='director']/ancestor::label)[last()]")).click();
         }
-        driver.findElement(By.name(index + "firstName")).sendKeys(info.getFirstname());
-        driver.findElement(By.name(index + "lastName")).sendKeys(info.getLastname());
-        driver.findElement(By.name(index + "middleName")).sendKeys(info.getMiddlename());
-        driver.findElement(By.name(index + "dob")).sendKeys(info.getDob());
-        driver.findElement(By.name(index + "phone")).sendKeys(info.getPhone());
-        driver.findElement(By.name(index + "email")).sendKeys(info.getEmail());
+        driver.findElement(name(index + "firstName")).sendKeys(info.getFirstname());
+        driver.findElement(name(index + "lastName")).sendKeys(info.getLastname());
+        driver.findElement(name(index + "middleName")).sendKeys(info.getMiddlename());
+        driver.findElement(name(index + "dob")).sendKeys(info.getDob());
+        driver.findElement(name(index + "phone")).sendKeys(info.getPhone());
+        driver.findElement(name(index + "email")).sendKeys(info.getEmail());
 
-        driver.findElement(By.xpath("(//*[@class='payment-method']//*[@class='submit'])[last()]")).click();
+        driver.findElement(xpath("(//*[@class='payment-method']//*[@class='submit'])[last()]")).click();
     }
 
     public void submitAndFinish() {
         driver.findElement(nextLocator).click();
-        wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath("//*[text()='Please check and review all the provided information and make sure that all the data is valid and belongs to you.']")));
+        wait.until(ExpectedConditions.presenceOfElementLocated(xpath("//*[text()='Please check and review all the provided information and make sure that all the data is valid and belongs to you.']")));
         driver.findElement(nextLocator).click();
         driver.quit();
     }
