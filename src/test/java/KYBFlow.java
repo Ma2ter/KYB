@@ -25,7 +25,7 @@ public class KYBFlow {
     }
 
     public static void main(String[] args) {
-        String url = "http://localhost:63342/rnd/rnd.main/MyPage.html?_ijt=e74p2f9it7ff6l72vsrcm31hpa";
+        String url = "/Users/ma2ter/IdeaProjects/rnd/src/main/resources/MyPage.html";
 
         CompanyInfo companyInfo = CompanyInfo.defaultInstance();
         List<UboInfo> uboInfoList = Arrays.asList(
