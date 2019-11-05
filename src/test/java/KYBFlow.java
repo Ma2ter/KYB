@@ -1,4 +1,7 @@
+import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -6,6 +9,7 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -25,7 +29,7 @@ public class KYBFlow {
     }
 
     public static void main(String[] args) {
-        String url = "/Users/ma2ter/IdeaProjects/rnd/src/main/resources/MyPage.html";
+        String url = "http://localhost:63342/rnd/rnd.main/MyPage.html?_ijt=vjt2lg2i3f7jfa0p1i6it1rspb";
 
         CompanyInfo companyInfo = CompanyInfo.defaultInstance();
         List<UboInfo> uboInfoList = Arrays.asList(
@@ -165,5 +169,14 @@ public class KYBFlow {
         wait.until(ExpectedConditions.presenceOfElementLocated(xpath("//*[text()='Please check and review all the provided information and make sure that all the data is valid and belongs to you.']")));
         driver.findElement(nextLocator).click();
         driver.quit();
+    }
+
+    public void takeScreenshot(String destination) {
+        File f = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        try {
+            FileUtils.copyFile(f, new File(destination));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
