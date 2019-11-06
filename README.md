@@ -57,7 +57,7 @@
 
 3. Генерируем временный accessToken: 
 ```curl -X POST \
-  'https://test-api.sumsub.com/resources/accessTokens?userId=n-t.io&externalUserId=<externalUserId>' \
+  'https://test-api.sumsub.com/resources/accessTokens?userId=<externalUserId>' \
   -H 'Accept: application/json' \
   -H 'Authorization: <authToken>'
   ```
